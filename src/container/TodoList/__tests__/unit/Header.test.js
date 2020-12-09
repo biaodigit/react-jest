@@ -19,12 +19,24 @@ describe('test header component', () => {
         expect(inputEl.prop('value')).toEqual('')
     });
 
-    test('header input onChange value',() => {
+    test('header input onchange value',() => {
         inputEl.simulate('change',{
             target: {
                 value: 'jest'
             }
         })
         expect(wrapper.state('value')).toEqual('jest')
+    })
+
+    test('input onchange enter',() => {
+        const fn = jest.fn()
+        wrapper = shallow(<Header addUndoItem={fn}/>)
+        inputEl = wrapper.find('[data-test="input"]')
+        wrapper.setState({value:'test'})
+        inputEl.simulate('keyUp',{
+            keyCode: 13
+        })
+        expect(fn).toHaveBeenCalledWith('test')
+
     })
 })
