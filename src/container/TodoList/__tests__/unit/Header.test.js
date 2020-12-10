@@ -37,6 +37,7 @@ describe('test header component', () => {
             keyCode: 13
         })
         expect(fn).toHaveBeenCalledWith('test')
-
+        const newInput = wrapper.find('[data-test="input"]')
+        expect(newInput.prop('value')).toEqual('')
     })
 })

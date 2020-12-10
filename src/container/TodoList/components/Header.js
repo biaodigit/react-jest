@@ -15,6 +15,7 @@ class Header extends Component {
   handleInputKeyup = (e) => {
     if(e.keyCode === 13 && this.state.value){
       this.props.addUndoItem(this.state.value)
+      this.setState({value:''})
     }
   }
 
