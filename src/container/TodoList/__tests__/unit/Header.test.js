@@ -14,12 +14,16 @@ describe('test header component', () => {
         inputEl = wrapper.find('[data-test="input"]')
     })
 
-    test('basic header', () => {
+    it('render style',() => {
+        expect(wrapper).toMatchSnapshot()
+    })
+
+    it('basic header', () => {
         expect(inputEl.length).toBe(1)
         expect(inputEl.prop('value')).toEqual('')
     });
 
-    test('header input onchange value',() => {
+    it('header input onchange value',() => {
         inputEl.simulate('change',{
             target: {
                 value: 'jest'
@@ -28,7 +32,7 @@ describe('test header component', () => {
         expect(wrapper.state('value')).toEqual('jest')
     })
 
-    test('input onchange enter',() => {
+    it('input onchange enter',() => {
         const fn = jest.fn()
         wrapper = shallow(<Header addUndoItem={fn}/>)
         inputEl = wrapper.find('[data-test="input"]')

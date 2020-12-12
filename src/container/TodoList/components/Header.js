@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../style.css'
 
 class Header extends Component {
   constructor(props) {
@@ -13,9 +14,9 @@ class Header extends Component {
   }
 
   handleInputKeyup = (e) => {
-    if(e.keyCode === 13 && this.state.value){
+    if (e.keyCode === 13 && this.state.value) {
       this.props.addUndoItem(this.state.value)
-      this.setState({value:''})
+      this.setState({ value: '' })
     }
   }
 
@@ -23,12 +24,18 @@ class Header extends Component {
     const { value } = this.state
     return (
       <div className="header">
-        <input
-          data-test="input"
-          value={value}
-          onChange={this.handleInputChange}
-          onKeyUp={this.handleInputKeyup}
-        />
+        <div className="header-content">
+          TodoList
+          <input
+            className="header-input"
+            placeholder="add todo"
+            data-test="input"
+            value={value}
+            onChange={this.handleInputChange}
+            onKeyUp={this.handleInputKeyup}
+          />
+        </div>
+
       </div>
     )
   }
