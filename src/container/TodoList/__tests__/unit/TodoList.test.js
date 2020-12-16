@@ -10,13 +10,27 @@ describe('test todoList componennt', () => {
     })
     test('basic totoList', () => {
         expect(wrapper.state('undoList')).toEqual([])
-        expect(Header.prop('addUndoItem')).toBe(wrapper.instance().addUndoItem)
+        expect(Header.prop('addUndoItem')).toBeTruthy()
     })
 
     test('todolist add new item', () => {
-        const addFun = Header.prop('addUndoItem')
-        addFun('test')
-        expect(wrapper.state('undoList').length).toEqual(1)
-        expect(wrapper.state('undoList')[0]).toEqual('test')
+        wrapper.instance().addUndoItem('test1')
+        expect(wrapper.state('undoList').length).toBe(1)
+        wrapper.instance().addUndoItem('test2')
+        expect(wrapper.state('undoList').length).toBe(2)
+    })
+
+    test('todolist passes prop to undolist', () => {
+        const UndoList = wrapper.find('UndoList')
+        expect(UndoList.prop('list')).toBeTruthy()
+        expect(UndoList.prop('deleteItem')).toBeTruthy()
+    })
+
+    test('todolist callbacl deleteItem fn,undolist delete item', () => {
+        wrapper.setState({
+            undoList: ['test1', 'test2']
+        })
+        wrapper.instance().deleteItem(0)
+        expect(wrapper.state('undoList')).toEqual(['test2'])
     })
 })

@@ -6,14 +6,16 @@ class UndoList extends Component {
     //     super(props)
     // }
 
+
     render() {
-        const { list } = this.props
+        const { list, deleteItem } = this.props
         return (
             <div>
                 <div data-test="count">{list.length}</div>
                 <ul>
                     {list.map((item, index) => (
-                        <li key={`${item}-${index}`} data-test="list-item">{item}<span data-test="del-item">-</span></li>
+                        <li key={`${item}-${index}`} data-test="list-item">{item}
+                            <span onClick={() => deleteItem(index)} data-test="del-item">-</span></li>
                     ))}
                 </ul>
             </div>

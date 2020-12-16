@@ -27,13 +27,11 @@ describe('test undolist component', () => {
     })
 
     it('if undolist unempty,can delete', () => {
-        wrapper = shallow(<UndoList list={['test1', 'test2']} />)
-        const countEl = findTestWrapper(wrapper, 'count')
+        const fn = jest.fn()
+        wrapper = shallow(<UndoList deleteItem={fn} list={['test1', 'test2']} />)
         const delItems = findTestWrapper(wrapper, 'del-item')
-        expect(countEl.text()).toEqual('2')
-        expect(delItems.length).toEqual(2)
+        delItems.at(1).simulate('click')
+        expect(fn).toHaveBeenLastCalledWith(1)
     })
-
-
 
 })
