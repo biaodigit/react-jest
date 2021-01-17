@@ -4,22 +4,23 @@ import { findTestWrapper } from '../../../../utils/testUtils'
 import Header from '../../components/Header'
 
 let wrapper, inputEl;
+
 describe('test header component', () => {
     beforeEach(() => {
         wrapper = shallow(<Header />)
         inputEl = findTestWrapper(wrapper, 'input')
     })
 
-    it('render style', () => {
+    it('should render style', () => {
         expect(wrapper).toMatchSnapshot()
     })
 
-    it('basic header', () => {
+    it('should be include input and initial value should be empty', () => {
         expect(inputEl.length).toBe(1)
         expect(inputEl.prop('value')).toEqual('')
     });
 
-    it('header input onchange value', () => {
+    it('the content of the input box changes with user input', () => {
         inputEl.simulate('change', {
             target: {
                 value: 'jest'
@@ -28,7 +29,16 @@ describe('test header component', () => {
         expect(wrapper.state('value')).toEqual('jest')
     })
 
-    it('input onchange enter', () => {
+    it('press enter when there is no content of the input box,no response', () => {
+        const fn = jest.fn()
+        wrapper.setState({ value: '' })
+        inputEl.simulate('keyUp', {
+            keyCode: 13
+        })
+        expect(fn).not.toHaveBeenCalled()
+    })
+
+    it('press enter when the input box has content, the external function has called, the content is cleared', () => {
         const fn = jest.fn()
         wrapper = shallow(<Header addUndoItem={fn} />)
         inputEl = findTestWrapper(wrapper, 'input')
