@@ -28,6 +28,7 @@ describe('test todoList componennt', () => {
         expect(UndoList.prop('deleteItem')).toBeTruthy()
         expect(UndoList.prop('changeStatus')).toBeTruthy()
         expect(UndoList.prop('handleBlur')).toBeTruthy()
+        expect(UndoList.prop('valueChange')).toBeTruthy()
     })
 
     test('deleteItem method is called,undolist data item is deleted', () => {
@@ -46,7 +47,17 @@ describe('test todoList componennt', () => {
         expect(wrapper.state('undoList')[1]).toEqual({ focus: true, value: 'test2' })
     })
     it('handleBlur method is called', () => {
-        const fn = jest.fn()
-
+        wrapper.setState({
+            undoList: [{ focus: false, value: 'test1' }, { focus: false, value: 'test2' }]
+        })
+        wrapper.instance().handleBlur(0)
+        expect(wrapper.state('undoList')[0]).toEqual({ focus: false, value: 'test1' })
+    })
+    it('valueChange method is called,undolist data item is changed', () => {
+        wrapper.setState({
+            undoList: [{ focus: false, value: 'test1' }, { focus: false, value: 'test2' }]
+        })
+        wrapper.instance().valueChange(0, 'tdd')
+        expect(wrapper.state('undoList')[0]).toEqual({ focus: false, value: 'tdd' })
     })
 })

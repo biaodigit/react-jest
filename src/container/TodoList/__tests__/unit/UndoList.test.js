@@ -12,6 +12,10 @@ describe('test undolist component', () => {
             { focus: true, value: 'test2' }
         ]
     })
+    it('render snapshot', () => {
+        const wrapper = shallow(<UndoList list={data} />)
+        expect(wrapper).toMatchSnapshot()
+    })
     it('when the list data is empty,the count number is 0,the list has no content', () => {
         wrapper = shallow(<UndoList list={[]} />)
         const countEl = findTestWrapper(wrapper, 'count')
@@ -59,6 +63,17 @@ describe('test undolist component', () => {
         const inputItems = findTestWrapper(wrapper, 'input')
         inputItems.simulate('blur')
         expect(fn).toHaveBeenCalledWith(1)
-
+    })
+    it('when input change, the valueChange will be called', () => {
+        const fn = jest.fn()
+        const data = [
+            { focus: true, value: 'test1' }
+        ]
+        wrapper = shallow(<UndoList valueChange={fn} list={data} />)
+        const inputItems = findTestWrapper(wrapper, 'input')
+        inputItems.simulate('change', {
+            target: { value: 'learn tdd' }
+        })
+        expect(fn).toHaveBeenCalledWith(0, 'learn tdd')
     })
 })
